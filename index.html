@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MozVendas</title>
+  <script type="module">
+    // Importações do Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, query, where, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // 🔐 Configuração Firebase (SUBSTITUA COM A SUA)
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_DOMINIO.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_BUCKET",
+      messagingSenderId: "SEU_ID",
+      appId: "SEU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // 🌐 DOM Elements
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const dashboard = document.getElementById('dashboard');
+    const vendasDiv = document.getElementById('vendas');
+
+    // 🔁 Verifica login
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+        dashboard.style.display = 'block';
+        await carregarVendas();
+      } else {
+        dashboard.style.display = 'none';
+        loginForm.style.display = 'block';
+      }
+    });
+
+    // 🟢 Login
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const email = document.getElementById('login-email').value;
+      const senha = document.getElementById('login-senha').value;
+      try {
+        await signInWithEmailAndPassword(auth, email, senha);
+      } catch (error) {
+        alert("Erro no login: " + error.message);
+      }
+    });
+
+    // 🆕 Registro
+    document.getElementById('register-btn').addEventListener('click', async () => {
+      const email = document.getElementById('register-email').value;
+      const senha = document.getElementById('register-senha').value;
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, senha);
+        await addDoc(collection(db, "vendas"), {
+          userId: cred.user.uid,
+          valor: Math.floor(Math.random() * 1000) + 100,
+          metodo: "M-Pesa",
+          data: Timestamp.now()
+        });
+        alert("Registrado com sucesso!");
+      } catch (error) {
+        alert("Erro no cadastro: " + error.message);
+      }
+    });
+
+    // 🚪 Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      signOut(auth);
+    });
+
+    // 📊 Carrega Vendas
+    async function carregarVendas() {
+      const user = auth.currentUser;
+      const q = query(collection(db, "vendas"), where("userId", "==", user.uid));
+      const snapshot = await getDocs(q);
+      let total = 0;
+      let count = 0;
+      snapshot.forEach(doc => {
+        total += doc.data().valor;
+        count++;
+      });
+      vendasDiv.innerHTML = `
+        <h3>📦 Total de Vendas: ${count}</h3>
+        <h3>💰 Valor Total: ${total} MZN</h3>
+      `;
+    }
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .card {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #dashboard { display: none; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="login-form">
+    <h2>Login</h2>
+    <input type="email" id="login-email" placeholder="Email (use um e-mail real)" />
+    <input type="password" id="login-senha" placeholder="Senha (use a senha correta)" />
+    <button id="login-btn">Entrar</button>
+    <p style="text-align:center">ou</p>
+    <button onclick="document.getElementById('login-form').style.display='none'; document.getElementById('register-form').style.display='block';">Criar Conta</button>
+  </div>
+
+  <div class="card" id="register-form" style="display:none;">
+    <h2>Registrar</h2>
+    <input type="email" id="register-email" placeholder="Email (use um e-mail real)" />
+    <input type="password" id="register-senha" placeholder="Senha (use a senha correta)" />
+    <button id="register-btn">Registrar</button>
+    <p style="text-align:center">ou</p>
+    <button onclick="document.getElementById('register-form').style.display='none'; document.getElementById('login-form').style.display='block';">Já tenho conta</button>
+  </div>
+
+  <div id="dashboard">
+    <h2>Bem-vindo à MozVendas</h2>
+    <div id="vendas"></div>
+    <button id="logout-btn">Sair</button>
+  </div>
+
+</body>
+</html>
