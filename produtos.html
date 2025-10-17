@@ -1,1 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Produtos - Vendoo</title>
 
+<!-- Fonte Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background-color: #f5f6fa;
+    color: #333;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .btn-criar {
+    background-color: #5a50f0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .btn-criar:hover {
+    background-color: #473ed8;
+  }
+
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .filtros select, .filtros input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  .tabela th, .tabela td {
+    text-align: left;
+    padding: 12px;
+  }
+
+  .tabela th {
+    color: #666;
+    font-weight: 500;
+    border-bottom: 2px solid #eee;
+  }
+
+  .tabela td {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .status {
+    background: #d4f5df;
+    color: #1a8b3d;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .paginacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .paginacao button {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .paginacao span {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .info {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .info a {
+    color: #5a50f0;
+    text-decoration: none;
+  }
+
+  .info a:hover {
+    text-decoration: underline;
+  }
+
+  .vazio {
+    text-align: center;
+    color: #999;
+    padding: 25px;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Produtos</h1>
+      <button class="btn-criar">Criar produto</button>
+    </header>
+
+    <div class="filtros">
+      <select>
+        <option>Meus produtos</option>
+      </select>
+      <input type="text" placeholder="Buscar...">
+      <select>
+        <option>Todos</option>
+        <option>Ativos</option>
+        <option>Inativos</option>
+      </select>
+    </div>
+
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="lista-produtos">
+        <tr>
+          <td colspan="3" class="vazio">Nenhum produto cadastrado</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="paginacao">
+      <button disabled>Anterior</button>
+      <span>1 / 1 página</span>
+      <button disabled>Próximo</button>
+    </div>
+
+    <div class="info">
+      <p>ℹ️ Aprenda mais sobre os <a href="#">produtos</a></p>
+    </div>
+  </div>
+
+<script>
+  // Exemplo básico para busca (funciona quando Firestore for conectado)
+  const inputBusca = document.querySelector("input");
+  const lista = document.querySelector("#lista-produtos");
+
+  inputBusca.addEventListener("keyup", () => {
+    const termo = inputBusca.value.toLowerCase();
+    const linhas = lista.querySelectorAll("tr");
+    linhas.forEach(linha => {
+      const nome = linha.children[0]?.textContent?.toLowerCase() || "";
+      if (nome.includes(termo) || nome === "nenhum produto cadastrado") return;
+      linha.style.display = nome.includes(termo) ? "" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>
