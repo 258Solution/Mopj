@@ -127,13 +127,19 @@ footer {
   cursor: pointer;
   color: var(--text-color);
 }
-
-/* Cards */
+  
 .card-valor, .card-valor1 {
-  display:flex; align-items:center; max-width:600px; width:100%; padding:16px 20px; border-radius:10px; gap:12px;
-  background:var(--card-bg);
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 10px;
+  gap: 12px;
+  background: var(--card-bg);
   border: 1px solid var(--card-border);
   box-shadow: 0 2px 8px var(--shadow-color);
+  height: 100px; /* 👈 define altura fixa */
 }
 .icon-box, .icon-box1 { font-size: 24px; color:#6c757d; }
 .info-box, .info-box1 { display: flex; flex-direction: column; }
@@ -338,3 +344,5 @@ document.getElementById('dataSelect').addEventListener('change',function(){
 
 </body>
 </html>
+
+já/
