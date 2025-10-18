@@ -19,14 +19,28 @@
       padding: 0;
       display: flex;
       flex-direction: column;
+      align-items: center; /* centraliza horizontalmente */
+    }
+
+    /* Bloco do topo centralizado */
+    .topo {
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center; /* centraliza verticalmente */
+      min-height: 80vh;        /* ocupa 80% da altura da tela */
+      width: 100%;
     }
 
     header {
       text-align: center;
-      margin-top: 0px;
-      color: #38bdf8;
-      margin-bottom:0px;
+      margin: 0; /* sem margem em cima */
+    }
+
+    header p {
+      margin: 5px 0 0 0; /* pequeno espaço entre título e resumo */
+      color: #94a3b8;
+      font-size: 14px;
     }
 
     .chart-container {
@@ -94,15 +108,19 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1> Relatório de Vendas</h1>
-    <p>Resumo geral das suas atividades de vendas e faturamento</p>
-  </header>
 
-  <!-- Gráfico de Pizza -->
-  <div class="chart-container">
-    <h2 style="color:#38bdf8;">Distribuição de Pagamentos</h2>
-    <canvas id="pizzaChart"></canvas>
+  <!-- Bloco topo centralizado -->
+  <div class="topo">
+    <header>
+      <h1>Relatório de Vendas</h1>
+      <p>Resumo geral das suas atividades de vendas e faturamento</p>
+    </header>
+
+    <!-- Gráfico de Pizza -->
+    <div class="chart-container">
+      <h2 style="color:#38bdf8;">Distribuição de Pagamentos</h2>
+      <canvas id="pizzaChart"></canvas>
+    </div>
   </div>
 
   <!-- Estatísticas principais -->
@@ -125,10 +143,10 @@
     </div>
   </section>
 
-  
+  <footer>
+    &copy; 2025 Vendoo
+  </footer>
 
-  
-  
   <!-- Script do gráfico -->
   <script>
     const ctx = document.getElementById('pizzaChart').getContext('2d');
