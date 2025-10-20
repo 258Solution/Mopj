@@ -11,25 +11,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-      color: #f1f5f9;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* centraliza horizontalmente */
-    }
-
-    <style>
 :root {
   --bg-color: #ffffff;
   --text-color: #000000;
   --card-bg: #F8FAFC;
   --card-text: #000000;
-  --card-border: rgba(0,0,0,0.08);
-  --shadow-color: rgba(0,0,0,0.08);
 }
 
 .dark-mode {
@@ -37,184 +23,151 @@
   --text-color: #f1f1f1;
   --card-bg: #181818;
   --card-text: #ffffff;
-  --card-border: rgba(255,255,255,0.08);
-  --shadow-color: rgba(0,0,0,0.5);
 }
 
 body {
+  font-family: 'Poppins', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.4s, color 0.4s;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.3s, color 0.3s;
 }
-    /* Bloco do topo centralizado */
-    .topo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center; /* centraliza verticalmente */
-      min-height: 80vh;        /* ocupa 80% da altura da tela */
-      width: 100%;
-    }
 
-    header {
-      text-align: center;
-      margin: 0; /* sem margem em cima */
-    }
+.topo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  width: 100%;
+}
 
-    header p {
-      margin: 5px 0 0 0; /* pequeno espaço entre título e resumo */
-      color: #94a3b8;
-      font-size: 14px;
-    }
+header {
+  text-align: center;
+  margin: 0;
+}
 
-    .chart-container {
-      background: #1e293b;
-      border-radius: 20px;
-      padding: 25px;
-      width: 90%;
-      max-width: 259px;
-      margin-top: 5px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.4);
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
+header p {
+  margin: 5px 0 0 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
 
-    .chart-container:hover {
-      transform: scale(1.02);
-    }
+.chart-container {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 25px;
+  width: 90%;
+  max-width: 259px;
+  margin-top: 5px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
 
-    canvas {
-      max-width: 300px;
-      margin: 10px auto;
-    }
+.chart-container:hover {
+  transform: scale(1.02);
+}
 
-    .stats {
-      margin-top: 30px;
-      width: 90%;
-      max-width: 800px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
+canvas {
+  max-width: 300px;
+  margin: 10px auto;
+}
 
-    .stat-card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.stats {
+  margin-top: 30px;
+  width: 90%;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
 
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-    }
+.stat-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--card-text);
+}
 
-    .stat-title {
-      color: #94a3b8;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .stat-value {
-      font-size: 22px;
-      font-weight: 600;
-      color: #38bdf8;
-    }
-
-    footer {
-      margin-top: 40px;
-      color: #64748b;
-      font-size: 13px;
-      padding-bottom: 20px;
-    }
+footer {
+  margin-top: 40px;
+  color: #64748b;
+  font-size: 13px;
+  padding-bottom: 20px;
+}
   </style>
 </head>
 <body>
-
-  <!-- Bloco topo centralizado -->
   <div class="topo">
     <header>
       <h1>Relatório de Vendas</h1>
+      <button onclick="toggleTheme()">Alternar tema</button>
    </header>
 
-    <!-- Gráfico de Pizza -->
     <div class="chart-container">
       <h2 style="color:#38bdf8;">Distribuição de Pagamentos</h2>
       <canvas id="pizzaChart"></canvas>
     </div>
   </div>
 
-  <!-- Estatísticas principais -->
   <section class="stats">
-    <div class="stat-card">
-      <div class="stat-title">Total de Vendas</div>
-      <div class="stat-value">42.300 MZN</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Faturamento Médio Diário</div>
-      <div class="stat-value">1.410 MZN</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Produtos Vendidos</div>
-      <div class="stat-value">312</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Afiliados Ativos</div>
-      <div class="stat-value">8</div>
-    </div>
+    <div class="stat-card"><div class="stat-title">Total de Vendas</div><div class="stat-value">42.300 MZN</div></div>
+    <div class="stat-card"><div class="stat-title">Faturamento Médio Diário</div><div class="stat-value">1.410 MZN</div></div>
+    <div class="stat-card"><div class="stat-title">Produtos Vendidos</div><div class="stat-value">312</div></div>
+    <div class="stat-card"><div class="stat-title">Afiliados Ativos</div><div class="stat-value">8</div></div>
   </section>
 
-  <footer>
-    &copy; 2025 Vendoo
-  </footer>
+  <footer>&copy; 2025 Vendoo</footer>
 
-  <!-- Script do gráfico -->
-  <script>
-    const ctx = document.getElementById('pizzaChart').getContext('2d');
-    const mpesa = 65;
-    const emola = 35;
-    const total = mpesa + emola;
+<script>
+const ctx = document.getElementById('pizzaChart').getContext('2d');
+const mpesa = 65;
+const emola = 35;
+const total = mpesa + emola;
 
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['M-Pesa', 'E-Mola'],
-        datasets: [{
-          data: [mpesa, emola],
-          backgroundColor: ['#22c55e', '#f97316'],
-          borderColor: '#0f172a',
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { color: '#fff', font: { size: 13 } }
-          },
-          datalabels: {
-            color: '#fff',
-            font: { weight: 'bold', size: 14 },
-            formatter: (value) => ((value / total) * 100).toFixed(1) + '%'
-          }
-        }
-      },
-      plugins: [ChartDataLabels]
-    });
-  </script>
+new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['M-Pesa', 'E-Mola'],
+    datasets: [{
+      data: [mpesa, emola],
+      backgroundColor: ['#22c55e', '#f97316'],
+      borderColor: '#0f172a',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: '#fff', font: { size: 13 } } },
+      datalabels: {
+        color: '#fff',
+        font: { weight: 'bold', size: 14 },
+        formatter: (value) => ((value / total) * 100).toFixed(1) + '%'
+      }
+    }
+  },
+  plugins: [ChartDataLabels]
+});
 
-  <script>
-// Aplica automaticamente o tema salvo
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-  document.body.classList.add('dark-mode');
-} else {
-  document.body.classList.remove('dark-mode');
+// ===== Funções de tema =====
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
+
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+})();
 </script>
-  
 </body>
 </html>
