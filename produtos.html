@@ -9,6 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+  /* ===== VARIÁVEIS DO TEMA ===== */
+  :root {
+    --bg-color: #f5f6fa;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --card-text: #000000;
+    --border-color: #ddd;
+  }
+
+  .dark-mode {
+    --bg-color: #121212;
+    --text-color: #f1f1f1;
+    --card-bg: #181818;
+    --card-text: #ffffff;
+    --border-color: #333;
+  }
+
+  /* ===== ESTILO GERAL ===== */
   * {
     margin: 0;
     padding: 0;
@@ -17,18 +35,21 @@
   }
 
   body {
-    background-color: #f5f6fa;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 20px;
+    transition: background 0.3s, color 0.3s;
   }
 
   .container {
     max-width: 900px;
     margin: 0 auto;
-    background: #fff;
+    background: var(--card-bg);
+    color: var(--card-text);
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
   }
 
   header {
@@ -67,10 +88,12 @@
 
   .filtros select, .filtros input {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     flex: 1;
     min-width: 150px;
+    background: var(--card-bg);
+    color: var(--card-text);
   }
 
   .tabela {
@@ -85,13 +108,13 @@
   }
 
   .tabela th {
-    color: #666;
+    color: var(--text-color);
     font-weight: 500;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--border-color);
   }
 
   .tabela td {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .status {
@@ -112,32 +135,29 @@
   }
 
   .paginacao button {
-    background: #fff;
-    border: 1px solid #ddd;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     padding: 8px 14px;
     border-radius: 8px;
     cursor: pointer;
+    color: var(--text-color);
   }
 
   .paginacao span {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--text-color);
   }
 
   .info {
     text-align: center;
     margin-top: 25px;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-color);
   }
 
   .info a {
     color: #5a50f0;
     text-decoration: none;
-  }
-
-  .info a:hover {
-    text-decoration: underline;
   }
 
   .vazio {
@@ -153,7 +173,7 @@
   <div class="container">
     <header>
       <h1>Produtos</h1>
-      <button class="btn-criar">Criar produto</button>
+      <button class="btn-criar" onclick="toggleTheme()">Alternar tema</button>
     </header>
 
     <div class="filtros">
@@ -195,29 +215,17 @@
   </div>
 
 <script>
-  // Exemplo básico para busca (funciona quando Firestore for conectado)
-  const inputBusca = document.querySelector("input");
-  const lista = document.querySelector("#lista-produtos");
-
-  inputBusca.addEventListener("keyup", () => {
-    const termo = inputBusca.value.toLowerCase();
-    const linhas = lista.querySelectorAll("tr");
-    linhas.forEach(linha => {
-      const nome = linha.children[0]?.textContent?.toLowerCase() || "";
-      if (nome.includes(termo) || nome === "nenhum produto cadastrado") return;
-      linha.style.display = nome.includes(termo) ? "" : "none";
-    });
-  });
-</script>
-
- <script>
-// Aplica automaticamente o tema salvo
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-  document.body.classList.add('dark-mode');
-} else {
-  document.body.classList.remove('dark-mode');
+// ===== Função global para alternar tema =====
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
+
+// ===== Aplica automaticamente o tema salvo =====
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+})();
 </script>
 </body>
 </html>
