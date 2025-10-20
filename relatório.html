@@ -22,6 +22,30 @@
       align-items: center; /* centraliza horizontalmente */
     }
 
+    <style>
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg: #F8FAFC;
+  --card-text: #000000;
+  --card-border: rgba(0,0,0,0.08);
+  --shadow-color: rgba(0,0,0,0.08);
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: #181818;
+  --card-text: #ffffff;
+  --card-border: rgba(255,255,255,0.08);
+  --shadow-color: rgba(0,0,0,0.5);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.4s, color 0.4s;
+}
     /* Bloco do topo centralizado */
     .topo {
       display: flex;
