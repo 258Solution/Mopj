@@ -21,14 +21,16 @@ body.dark-mode {
   color: #f1f1f1 !important;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: background-color 0.4s, color 0.4s;
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    color: var(--card-text);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+  }
 }
 
 .dark-mode .container {
