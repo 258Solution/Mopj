@@ -13,8 +13,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ===== RESET GERAL ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+/* ===== BASE ===== */
 body {
   display: flex;
   flex-direction: column;
@@ -25,9 +31,12 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.4s ease, color 0.4s ease;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Variáveis de cor */
+/* ===== VARIÁVEIS DE COR ===== */
 :root {
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -37,35 +46,25 @@ body {
   --shadow-color: rgba(0,0,0,0.08);
 }
 
-/* Modo escuro */
-.dark-mode {  
-  --bg-color: #121212;  
-  --text-color: #f1f1f1;  
-  --card-bg: #181818;  
-  --card-text: #ffffff;  
+/* ===== MODO ESCURO ===== */
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: #181818;
+  --card-text: #ffffff;
   --card-border: rgba(255,255,255,0.08);
   --shadow-color: rgba(0,0,0,0.5);
 }
 
-/* ===== Transição suave ===== */
-body,
-footer,
-.card-valor,
-.card-valor1,
-#btn-produtos,
-#btn-relatorios,
-#btn-financeiro,
-#graficoContainer,
-.logo-square,
-.logo-text {
-  transition: 
-    background-color 0.4s ease,
-    color 0.4s ease,
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
+/* ===== TRANSIÇÃO SUAVE ===== */
+body, footer, .card-valor, .card-valor1,
+#btn-produtos, #btn-relatorios, #btn-financeiro,
+#graficoContainer, .logo-square, .logo-text {
+  transition: background-color 0.4s ease, color 0.4s ease,
+              border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Rodapé fixo */
+/* ===== RODAPÉ FIXO ===== */
 footer {
   position: fixed;
   bottom: 0;
@@ -83,7 +82,7 @@ footer {
   z-index: 1000;
 }
 
-/* Logo */
+/* ===== LOGO ===== */
 .footer-left {
   display: flex;
   align-items: center;
@@ -113,7 +112,7 @@ footer {
   color: var(--text-color);
 }
 
-/* Área direita do footer (toggle tema) */
+/* ===== ÁREA DIREITA DO FOOTER (BOTÃO TEMA) ===== */
 .footer-right {
   display: flex;
   align-items: center;
@@ -127,11 +126,11 @@ footer {
   cursor: pointer;
   color: var(--text-color);
 }
-  
+
+/* ===== CARDS ===== */
 .card-valor, .card-valor1 {
   display: flex;
   align-items: center;
-  max-width: 600px;
   width: 100%;
   padding: 16px 20px;
   border-radius: 10px;
@@ -139,38 +138,104 @@ footer {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   box-shadow: 0 2px 8px var(--shadow-color);
-  height: 100px; /* 👈 define altura fixa */
+  height: 100px;
 }
 .icon-box, .icon-box1 { font-size: 24px; color:#6c757d; }
 .info-box, .info-box1 { display: flex; flex-direction: column; }
 .titulo, .titulo1 { font-size: 14px; color: #6c757d; }
 .valor { font-size: 20px; font-weight: bold; color: green; }
 .valor1 { font-size: 20px; font-weight: bold; color: #00aaff; }
-.toggle-valor, .toggle-valor1 { cursor: pointer; font-size: 22px; color: #6c757d; margin-left: auto; }
+.toggle-valor, .toggle-valor1 {
+  cursor: pointer;
+  font-size: 22px;
+  color: #6c757d;
+  margin-left: auto;
+}
 
-/* Botões de navegação */
+/* ===== BOTÕES DE NAVEGAÇÃO ===== */
 #btn-produtos, #btn-relatorios, #btn-financeiro {
-  position: relative; display: flex; align-items: center;
-  max-width: 600px; width: 100%; height: 45px;
-  border-radius: 6px; padding: 0 40px 0 10px;
-  cursor: pointer; background: var(--card-bg); margin-top:8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  border-radius: 6px;
+  padding: 0 40px 0 10px;
+  cursor: pointer;
+  background: var(--card-bg);
+  margin-top: 8px;
   border: 1px solid var(--card-border);
   box-shadow: 0 2px 6px var(--shadow-color);
 }
-#btn-produtos .icon, #btn-relatorios .icon, #btn-financeiro .icon { font-size: 20px; margin-right: 10px; }
-#btn-produtos .text, #btn-relatorios .text, #btn-financeiro .text { font-size: 16px; }
-#btn-produtos .arrow, #btn-relatorios .arrow, #btn-financeiro .arrow { position: absolute; right: 10px; font-size: 16px; }
+#btn-produtos .icon, #btn-relatorios .icon, #btn-financeiro .icon {
+  font-size: 20px; margin-right: 10px;
+}
+#btn-produtos .text, #btn-relatorios .text, #btn-financeiro .text {
+  font-size: 16px;
+}
+#btn-produtos .arrow, #btn-relatorios .arrow, #btn-financeiro .arrow {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+}
 
-/* Gráfico container */
+/* ===== GRÁFICO ===== */
 #graficoContainer {
-  position: relative; max-width: 1000px; width: 100%; background: var(--card-bg);
-  padding: 20px; border-radius: 12px; margin-top:10px;
+  position: relative;
+  width: 100%;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 10px;
   border: 1px solid var(--card-border);
   box-shadow: 0 2px 6px var(--shadow-color);
 }
-#vendasHoraDia { width: 100% !important; height: 350px !important; display:block; }
-#dataSelect { position: absolute; top: 10px; right: 10px; padding: 6px 10px; font-size: 14px; max-width: 150px; width: 100%; }
-#diaVisual { font-weight: bold; font-size: 16px; cursor: pointer; }
+#vendasHoraDia {
+  width: 100% !important;
+  height: 400px !important;
+  display: block;
+}
+#dataSelect {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  font-size: 14px;
+  max-width: 150px;
+  width: 100%;
+}
+#diaVisual {
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ===== MODO TELA CHEIA NO COMPUTADOR ===== */
+@media (min-width: 900px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 30px 40px 100px;
+  }
+
+  #graficoContainer, .card-valor, .card-valor1,
+  #btn-produtos, #btn-relatorios, #btn-financeiro {
+    width: 100%;
+    max-width: 1600px;
+  }
+
+  footer {
+    padding: 12px 40px;
+  }
+}
 </style>
 </head>
 <body>
