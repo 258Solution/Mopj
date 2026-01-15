@@ -2,35 +2,101 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<title>Entrar no Grupo WhatsApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo WhatsApp</title>
 
 <style>
-.whatsapp-btn{
-  background:#25D366;
-  color:#fff;
-  padding:14px 22px;
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f8;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:16px;
+  max-width:380px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card h1{
+  font-size:22px;
+  color:#1f2933;
+}
+
+.card p{
+  font-size:15px;
+  color:#555;
+  margin-bottom:25px;
+}
+
+.btn{
+  display:block;
+  padding:15px;
   border-radius:50px;
   text-decoration:none;
-  font-family:Arial, sans-serif;
   font-size:16px;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  font-weight:bold;
+  margin-bottom:15px;
 }
-.whatsapp-btn:hover{
+
+.btn-group{
+  background:#25D366;
+  color:white;
+}
+
+.btn-group:hover{
   background:#1ebe5d;
+}
+
+.btn-chat{
+  background:#111;
+  color:white;
+}
+
+.btn-chat:hover{
+  background:#333;
+}
+
+.footer{
+  font-size:12px;
+  color:#999;
+  margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<a class="whatsapp-btn"
-   href="https://wa.me/?text=Quero%20entrar%20no%20grupo%20do%20WhatsApp:%20https://chat.whatsapp.com/BhsqUIuKZDQGdQtuYUUnwD"
-   target="_blank">
-   📲 Entrar no Grupo do WhatsApp
-</a>
+<div class="card">
+  <h1>🚀 Entre no nosso Grupo</h1>
+  <p>Clique no botão abaixo para entrar diretamente no grupo oficial do WhatsApp.</p>
+
+  <!-- BOTÃO ENTRAR NO GRUPO -->
+  <a class="btn btn-group"
+     href="https://chat.whatsapp.com/BhsqUIuKZDQGdQtuYUUnwD"
+     target="_blank">
+     🔗 Entrar no Grupo do WhatsApp
+  </a>
+
+  <!-- BOTÃO FALAR COMIGO -->
+  <a class="btn btn-chat"
+     href="https://wa.me/?text=Olá,%20quero%20mais%20informações"
+     target="_blank">
+     💬 Falar comigo no WhatsApp
+  </a>
+
+  <div class="footer">
+    Acesso rápido • Seguro • Oficial
+  </div>
+</div>
 
 </body>
 </html>
